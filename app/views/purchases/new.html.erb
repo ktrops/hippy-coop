@@ -1,0 +1,17 @@
+<h1>Please Check your name</h1>
+
+<%= form_for @member do |f| %>
+	<% @member.each do |member| %>
+		<%= member.radio_button :member, member %> <%= member.name %><br>
+	<% end %>
+	f.field_for(@purchase) do |b| 
+	<p>
+		<%= b.label :description, 'What did you purchase?' %><br>
+		<%= b.text_area :description %><br>
+		<%= b.label :cost, 'What did it cost?' %><br>
+		<%= b.text_area :cost %><br>
+	
+
+	<%= f.submit 'Submit' %>
+</p>
+<% end %>
