@@ -4,10 +4,6 @@
 <%= form_for @member do |f| %>
 	<%= f.label :name, "Member name" %><br>
     <%= f.text_area :name %><br>
-
-
-
-
 	<%= f.fields_for :room do |b| %>
 		<%= b.label :room_name %><br>
 		<%= b.text_area :room_name %><br>
@@ -18,3 +14,4 @@
 
 	<%= f.submit "Submit" %>
 <% end %>
+</p>
