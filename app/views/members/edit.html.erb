@@ -1,0 +1,12 @@
+<h3> Member Name </h3><br>
+<%= @member.name %><br>
+  <%= form_for @member.room, url: member_path(@member) do |f| %>
+	<%= f.label :room_name %><br>
+	<%= f.text_area :room_name %><br>
+	<%= f.label :rent %><br>
+	<%= f.text_area :rent %><br>
+
+  
+    <%= f.submit "Submit" %>
+
+  <% end %>
