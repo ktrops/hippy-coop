@@ -1,1 +1,21 @@
-<p><h3>Room rent</h3> <%= @purchase.room.rent %>
+<h3>Room rent</h3>
+<%= @member.room.rent%>
+<h3>Member Name</h3>
+<%= @member.name %>
+<% if @purchases != nil %>
+  <h3>Purchase(s)</h3>
+	<% @purchases.each do |purchase|  %>
+	  <%= purchase.cost %><br>
+	<% end %>
+  <h3>Total Rent</h3>
+  <%= @total_rent %>
+<% end %>
+<p>
+<%= link_to "change rooms", edit_member_path(@member.id) %>
+</p>
+<p>
+<%= link_to "change member", root_path %>
+</p>
+
+
+	
