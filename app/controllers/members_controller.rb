@@ -34,12 +34,16 @@ class MembersController < ApplicationController
 
 	def update
 		@member = Member.find(params[:id])
-		@member.room.update(rent: member_params[:member][:room_attributes][:rent], room_name: member_params[:member][:room_attributes][:room_name])
-		redirect_to "purchases/show/:id"
+		@member.room.update(room_params)
+		redirect_to purchase_path(@member.id)
 	end
 
 	def show
 		@member = Member.find(params[:id])
+	end
+
+	def room_params
+		params.require(:room).permit(:rent, :room_name)
 	end
 
 	def member_params
