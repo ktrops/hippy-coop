@@ -1,6 +1,8 @@
 class MembersController < ApplicationController
+
 	def home
 		@members = Member.all
+
 	end
 
 	def new
@@ -30,12 +32,28 @@ class MembersController < ApplicationController
 
 	def edit
 		@member = Member.find(params[:id])
+
+
 	end
 
 	def update
 		@member = Member.find(params[:id])
 		@member.room.update(room_params)
-		redirect_to purchase_path(@member.id)
+			
+		@member = Member.find(params[:id])
+		@purchases = Purchase.where(member_id: @member.id)
+		
+		count = 0
+		@purchases.each do |p|
+		  count += p.cost
+		end
+		
+		@room_rent = @member.room.rent
+		@total_rent = @room_rent - count
+		render "purchases/update"
+		# redirect_to purchase_path(@member.id, :method => "patch")
+		# redirect_to controller: "purchases", action: "update"
+		
 	end
 
 	def show

@@ -12,11 +12,13 @@ class PurchasesController < ApplicationController
 	def create
 		@purchase = Purchase.create(params_purch)
 		@purchase.member_id = session[:member_id]
+		# @purchase.member_id = params_purch[:member_id]
 		@purchase.save
 		@member = Member.find(session[:member_id])
+		# @member = Member.find(params_purch[:member_id])
 		@member.purchases.build
 		if @purchase.save
-			redirect_to purchase_path(@purchase.id)
+			redirect_to purchase_path(@purchase.id), method: "get"
 		else
 			render :new
 		end
@@ -24,25 +26,42 @@ class PurchasesController < ApplicationController
 
 	def show
 		# @purchases = Purchase.find(params[:id])
-		# @purchases = Purchase.where(member_id: session[:member_id])
-		@purchases = Purchase.where(member_id: params[:id])
+		@purchases = Purchase.where(member_id: session[:member_id])
+		# @purchases = Purchase.where(member_id: params[:id])
+
 		
 		count = 0
 		@purchases.each do |p|
 		  count += p.cost
 		end
 		# @members = Member.all
-		# @member = Member.find_by(room_id: session[:room_id])
-		@member = Member.find(params[:id])
+		@member = Member.find_by(room_id: session[:room_id])
+		# @member = Member.find(session[:member_id])
 		@room_rent = @member.room.rent
 		@total_rent = @room_rent - count
+	end
+
+	def update
+		@member = Member.find(params[:id])
+		@purchases = Purchase.where(member_id: @member.id)
+		
+		count = 0
+		@purchases.each do |p|
+		  count += p.cost
+		end
+		
+		@room_rent = @member.room.rent
+		@total_rent = @room_rent - count
+		
+
+
 	end
 
 
 
 
 	def params_purch
-		params.require(:purchase).permit(:description, :cost, 
+		params.require(:purchase).permit(:description, :cost, :member_id, 
 										member_attributes: [:name],
 										room_attributes: [:rent, :name])
 	end

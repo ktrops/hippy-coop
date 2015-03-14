@@ -3,5 +3,5 @@
 <%= link_to "Create new Member and new Room", new_member_path%>
 
 <% @members.each do |member| %>
-  <%= link_to "<p>#{member.name}".html_safe, purchase_path(member.id) %>
+  <%= link_to "<p>#{member.name}".html_safe, purchase_path(member.id), method: "patch" %>
 <% end %>
